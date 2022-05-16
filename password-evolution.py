@@ -3,7 +3,7 @@ import pyotp #generates one-time passwords
 import sqlite3 #database for username/passwords
 import hashlib #secure hashes and message digests
 import uuid #for creating universally unique identifiers
-from flask import Flask, request
+from flask import Flask, request, redirect
 
 
 app = Flask(__name__) #Be sure to use two underscores before and after "name"
@@ -11,12 +11,13 @@ db_name = 'test.db'
 
 @app.route('/')
 def index():
-    return 'Welcome to the hands-on lab for an evolution of password systems!'
+   return '<html><head></head><body><h1>Welcome to the hands-on lab for an evolution of password systems!!</h1></body></html>'
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, ssl_context='adhoc')
+# @app.route('/')
+# def hello_world():
+#     return redirect('/static/index.html')
 
-@app.route('/signup/v1', methods=('POST'))
+@app.route('/signup/v1', methods=['POST'])
 def signup_v1():
     conn = sqlite3.connect(db_name)
     c = conn.cursor()
@@ -54,7 +55,5 @@ def login_v1():
     return error
 
 
-
-
-
-
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, ssl_context='adhoc')
